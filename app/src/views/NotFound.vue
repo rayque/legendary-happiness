@@ -23,7 +23,7 @@
             rounded="lg"
             class="text-center"
         >
-          <h2 class="pa-3">Sobre nós</h2>
+          <h2 class="pa-3">Página não encontrada</h2>
           <h3>Navegue pelo meno acima</h3>
         </v-sheet>
       </v-col>
