@@ -19,7 +19,7 @@ class RecipiesController extends Controller
 
     public function getRecipies(Request $request)
     {
-        $response = $this->recipiesService->gerRecipies($request->i);
+        $response = $this->recipiesService->getRecipies($request->i);
         return response()->json($response['data'], $response['status']);
     }
 }

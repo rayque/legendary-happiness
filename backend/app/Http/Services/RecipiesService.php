@@ -4,12 +4,24 @@
 namespace App\Http\Services;
 
 
+use App\Http\Api\RecipePuppyApi;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+
 class RecipiesService
 {
-    public function gerRecipies($params)
+    /**
+     * @var RecipePuppyApi
+     */
+    private $recipePuppyApi;
+
+    public function __construct(RecipePuppyApi $recipePuppyApi)
+    {
+        $this->recipePuppyApi = $recipePuppyApi;
+    }
+
+    public function getRecipies($params)
     {
         try {
             if (!$params) {
@@ -24,9 +36,9 @@ class RecipiesService
                 ]);
             }
 
-            $response = Http::get('http://www.recipepuppy.com/api/?i=onions,garlic');
+            $responseRecipies = $this->recipePuppyApi->getRecipies('?i=onions,garlic');
 
-            if ($response->failed()) {
+            if ($responseRecipies->failed()) {
                 serverError("Falha ao buscar buscar receiras");
             }
 
@@ -37,7 +49,7 @@ class RecipiesService
                     'link' => $recipe['href'],
                     'gif' => $recipe['thumbnail'],
                 ];
-            }, $response->collect()['results'] ?? []);
+            }, $responseRecipies->collect()['results'] ?? []);
 
 
             $data = [
