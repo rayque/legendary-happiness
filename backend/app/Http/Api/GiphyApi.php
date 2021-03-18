@@ -4,6 +4,8 @@
 namespace App\Http\Api;
 
 
+use Illuminate\Http\Client\Response;
+
 class GiphyApi extends Api
 {
     public function __construct()
@@ -11,7 +13,7 @@ class GiphyApi extends Api
         parent::__construct(env('GIPHY_URL', ''));
     }
 
-    public function getGifs($params = '')
+    public function getGifs($params = ''): Response
     {
         $params['api_key'] = env('GIPHY_KEY', '');
         return $this->get($params);

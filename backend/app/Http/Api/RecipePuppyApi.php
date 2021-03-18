@@ -3,6 +3,8 @@
 
 namespace App\Http\Api;
 
+use Illuminate\Http\Client\Response;
+
 class RecipePuppyApi extends Api
 {
     public function __construct()
@@ -10,7 +12,7 @@ class RecipePuppyApi extends Api
         parent::__construct(env('RECIPEPUPPY_URL', ''));
     }
 
-    public function getRecipes($params = ''): \Illuminate\Http\Client\Response
+    public function getRecipes($params = ''): Response
     {
         return $this->get($params);
     }

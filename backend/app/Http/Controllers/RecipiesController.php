@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\RecipiesService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RecipiesController extends Controller
@@ -17,9 +18,9 @@ class RecipiesController extends Controller
         $this->recipiesService = $recipiesService;
     }
 
-    public function getRecipies(Request $request)
+    public function getRecipes(Request $request): JsonResponse
     {
-        $response = $this->recipiesService->getRecipies($request->i);
+        $response = $this->recipiesService->getRecipes($request->i);
         return response()->json($response['data'], $response['status']);
     }
 }

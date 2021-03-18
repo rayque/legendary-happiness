@@ -3,6 +3,7 @@
 
 namespace App\Http\Api;
 
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class Api
@@ -14,7 +15,7 @@ class Api
         $this->url = $url;
     }
 
-    protected function get($params)
+    protected function get($params): Response
     {
         return Http::get($this->url, $params);
     }

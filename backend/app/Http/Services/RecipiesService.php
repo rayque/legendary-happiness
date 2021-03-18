@@ -29,7 +29,7 @@ class RecipiesService
         $this->giphyApi = $giphyApi;
     }
 
-    public function getRecipies($params)
+    public function getRecipes($params): array
     {
         try {
             if (!$params) {
@@ -51,18 +51,15 @@ class RecipiesService
             }
             $responseRecipies = collect($responseRecipies->collect()['results']);
 
-            $recipies = $responseRecipies->map(function ($recipie) use ($params) {
-                $res = $this->giphyApi->getGifs([
-                    'q' => $recipie['title'],
-                    'limit' => 1,
-                    'rating' => 'g',
-                ]);
+            $responseGifs = $this->giphyApi->getGifs([
+                'q' => $params,
+                'limit' => $responseRecipies->count(),
+                'rating' => 'g',
+            ]);
+            $gifs = $responseGifs->collect()['data'] ?? [];
 
-                $data = $res->collect()['data'];
-                $gif = '#';
-                if (count($data)) {
-                    $gif = $data[0]['images']['fixed_height_downsampled']['url'] ?? $gif;
-                }
+            $recipies = $responseRecipies->map(function ($recipie, $index) use ($gifs) {
+                $gif = $gifs[$index]['images']['fixed_height_downsampled']['url'] ?? '';
 
                 return [
                     'title' => $recipie['title'],
