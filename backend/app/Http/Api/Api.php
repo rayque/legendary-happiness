@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class Api
 {
-    private $url;
+    protected $url;
 
     public function __construct($url)
       {
@@ -19,6 +19,6 @@ class Api
      */
     protected function get($params)
     {
-        return Http::get($this->url.$params);
+        return Http::get($this->url, $params);
     }
 }

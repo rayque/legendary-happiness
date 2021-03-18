@@ -4,6 +4,7 @@
 namespace App\Http\Services;
 
 
+use App\Http\Api\GiphyApi;
 use App\Http\Api\RecipePuppyApi;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -15,10 +16,17 @@ class RecipiesService
      * @var RecipePuppyApi
      */
     private $recipePuppyApi;
+    /**
+     * @var GiphyApi
+     */
+    private $giphyApi;
 
-    public function __construct(RecipePuppyApi $recipePuppyApi)
-    {
+    public function __construct(
+        RecipePuppyApi $recipePuppyApi,
+        GiphyApi $giphyApi
+    ) {
         $this->recipePuppyApi = $recipePuppyApi;
+        $this->giphyApi = $giphyApi;
     }
 
     public function getRecipies($params)
@@ -36,13 +44,24 @@ class RecipiesService
                 ]);
             }
 
-            $responseRecipies = $this->recipePuppyApi->getRecipies('?i=onions,garlic');
-
+            $responseRecipies = $this->recipePuppyApi->getRecipies($ingredients);
             if ($responseRecipies->failed()) {
                 serverError("Falha ao buscar buscar receiras");
             }
 
+
             $recipies = array_map(function ($recipe) {
+
+                $res = $this->giphyApi->getGifs([
+                    'q'=> $recipe['title'],
+                    'limit'=> 1,
+                    'rating'=> 'g',
+                ]);
+
+                if ($res->failed()) {
+                    serverError("Falha ao buscar buscar receiras");
+                }
+
                 return [
                     'title' => $recipe['title'],
                     'ingredients' =>  explode(",", $recipe['ingredients']) ,
