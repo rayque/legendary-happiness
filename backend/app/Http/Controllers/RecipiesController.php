@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\RecipiesService;
 use Illuminate\Http\Request;
 
 class RecipiesController extends Controller
 {
-    public function gerRecipies(Request $request)
+    /**
+     * @var RecipiesService
+     */
+    private $recipiesService;
+
+    public function __construct(RecipiesService $recipiesService)
     {
-        return response()->json($request->all(), 200);
+        $this->recipiesService = $recipiesService;
+    }
+
+    public function getRecipies(Request $request)
+    {
+        $response = $this->recipiesService->gerRecipies($request->i);
+        return response()->json($response['data'], $response['status']);
     }
 }
