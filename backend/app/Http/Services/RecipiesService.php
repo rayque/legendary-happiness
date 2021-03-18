@@ -51,15 +51,17 @@ class RecipiesService
             }
             $responseRecipies = collect($responseRecipies->collect()['results']);
 
-            $responseGifs = $this->giphyApi->getGifs([
-                'q' => $params,
-                'limit' => $responseRecipies->count(),
-                'rating' => 'g',
-            ]);
-            $gifs = $responseGifs->collect()['data'] ?? [];
-
-            $recipies = $responseRecipies->map(function ($recipie, $index) use ($gifs) {
-                $gif = $gifs[$index]['images']['fixed_height_downsampled']['url'] ?? '';
+            $recipies = $responseRecipies->map(function ($recipie) use($responseRecipies) {
+                $responseGifs = $this->giphyApi->getGifs([
+                    'q' => $recipie['title'],
+                    'limit' => $responseRecipies->count(),
+                    'rating' => 'g',
+                ]);
+                if ($responseGifs->failed()) {
+                    serverError();
+                }
+                $gifs = $responseGifs->collect()['data'] ?? [];
+                $gif = $gifs['0']['images']['fixed_height_downsampled']['url'] ?? '';
 
                 return [
                     'title' => $recipie['title'],
