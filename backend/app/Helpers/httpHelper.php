@@ -1,24 +1,24 @@
 <?php
 
-function ok($data): object
+function ok($data)
 {
-    return (object) [
+    return [
         'data' => $data,
         'status' => 200
     ];
 }
 
-function badRequest($data): object
+function badRequest($data)
 {
-    return (object) [
+    return [
         'data' => $data,
         'status' => 400
     ];
 }
 
-function serverError($message): object
+function serverError($message)
 {
-    return (object) [
+    return [
         'data' => [
             'message' => $message." Recomendamos que tente novamente ou entre em contato com o nosso suporte. xx xxxx-xxxx",
         ],
