@@ -53,12 +53,13 @@
                   block
                   depressed
                   class="ma-2"
-                  color="primary"
+                  color="orange"
                   dark
                   @click="addItem"
               >
                 Add Item
               </v-btn>
+
             </v-col>
           </v-row>
 
@@ -69,7 +70,7 @@
             >
               <v-chip-group>
                 <v-chip v-for="(ingredient, index) in ingredients" :key="index"
-                     color="primary" @click="removeItem(index)"
+                     color="success" @click="removeItem(index)"
                 >
                   <span class="pr-2"> {{ingredient}} </span>
                   <v-icon> mdi-close </v-icon>
@@ -123,19 +124,21 @@ export default {
     disableForm: false,
     recipiesList: [],
   }),
-  mounted() {
-    RecipiesApi.getRecipies('onions,garlic')
-    .then(res => {
-      this.recipiesList = res.recipies;
-    }).catch(e => {
-      console.log(e);
-    })
-
-  },
+  // mounted() {
+    // RecipiesApi.getRecipies('onions,garlic')
+    // .then(res => {
+    //   console.log(res);
+    //   this.recipiesList = res.recipies;
+    // }).catch(e => {
+    //   console.log(e);
+    // })
+  // },
   methods: {
     addItem() {
-      this.ingredients.push(this.ingredient);
-      this.ingredient = null;
+      if (this.ingredient) {
+        this.ingredients.push(this.ingredient);
+        this.ingredient = null;
+      }
     },
     removeItem(index){
       if (this.ingredients.indexOf(index) === -1) {

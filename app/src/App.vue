@@ -2,7 +2,7 @@
   <v-app id="app">
     <v-app-bar
         app
-        color="orange"
+        color="red"
         flat
     >
       <v-tabs
@@ -34,10 +34,9 @@
 export default {
   data: () => ({
     links: [
-      'Pesquisa',
-      'Novidades',
-      'Populares',
-      'Sobre Nós',
+      'Search',
+      'Trending',
+      'About us',
     ],
   }),
 }
