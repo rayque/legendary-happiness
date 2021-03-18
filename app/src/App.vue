@@ -1,5 +1,6 @@
 <template>
   <v-app id="app">
+    <snackbar />
     <v-app-bar
         app
         color="red"
@@ -31,7 +32,9 @@
 </template>
 
 <script>
+import Snackbar from "./common/Snackbar";
 export default {
+  components: {Snackbar},
   data: () => ({
     links: [
       'Search',

@@ -114,7 +114,7 @@
 <script>
 
 import RecipiesList from "../components/Recipies/RecipiesList";
-import RecipiesApi from "../services/RecipiesApi";
+// import RecipiesApi from "../services/RecipiesApi";
 export default {
   name: 'Home',
   components: {RecipiesList},
@@ -124,7 +124,7 @@ export default {
     disableForm: false,
     recipiesList: [],
   }),
-  // mounted() {
+  mounted() {
     // RecipiesApi.getRecipies('onions,garlic')
     // .then(res => {
     //   console.log(res);
@@ -132,7 +132,9 @@ export default {
     // }).catch(e => {
     //   console.log(e);
     // })
-  // },
+
+    this.Helper.showMessage("Respondedor cadastrado com sucesso!", 'success', 3000);
+  },
   methods: {
     addItem() {
       if (this.ingredient) {
