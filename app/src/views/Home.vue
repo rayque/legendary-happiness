@@ -85,7 +85,7 @@
                 sm="12"
             >
 
-              <recipies-list />
+              <recipies-list :recipies="recipiesList" />
 
             </v-col>
           </v-row>
@@ -113,6 +113,7 @@
 <script>
 
 import RecipiesList from "../components/Recipies/RecipiesList";
+import RecipiesApi from "../services/RecipiesApi";
 export default {
   name: 'Home',
   components: {RecipiesList},
@@ -120,14 +121,24 @@ export default {
     ingredient: null,
     ingredients: [],
     disableForm: false,
+    recipiesList: [],
   }),
+  mounted() {
+    RecipiesApi.getRecipies('onions,garlic')
+    .then(res => {
+      this.recipiesList = res.recipies;
+    }).catch(e => {
+      console.log(e);
+    })
+
+  },
   methods: {
     addItem() {
       this.ingredients.push(this.ingredient);
       this.ingredient = null;
     },
     removeItem(index){
-      if (this.ingredients.indexOf(index) == -1) {
+      if (this.ingredients.indexOf(index) === -1) {
         this.ingredients.splice(index, 1);
       }
     }
