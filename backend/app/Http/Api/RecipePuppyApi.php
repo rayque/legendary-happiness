@@ -5,14 +5,12 @@ namespace App\Http\Api;
 
 class RecipePuppyApi extends Api
 {
-    protected $url = 'http://www.recipepuppy.com/api/';
-
     public function __construct()
     {
-        parent::__construct($this->url);
+        parent::__construct(env('RECIPEPUPPY_URL', ''));
     }
 
-    public function getRecipies($params = '')
+    public function getRecipes($params = ''): \Illuminate\Http\Client\Response
     {
         return $this->get($params);
     }

@@ -6,7 +6,7 @@ namespace App\Http\Services;
 
 use App\Http\Api\GiphyApi;
 use App\Http\Api\RecipePuppyApi;
-use Illuminate\Support\Facades\Http;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 
@@ -37,6 +37,7 @@ class RecipiesService
                     'message' => 'Insert at least one ingredient.'
                 ]);
             }
+
             $ingredients = explode(",", $params);
             if (count($ingredients) > 3) {
                 return badRequest([
@@ -44,32 +45,32 @@ class RecipiesService
                 ]);
             }
 
-            $responseRecipies = $this->recipePuppyApi->getRecipies($ingredients);
+            $responseRecipies = $this->recipePuppyApi->getRecipes($ingredients);
             if ($responseRecipies->failed()) {
-                serverError("Falha ao buscar buscar receiras");
+                serverError();
             }
+            $responseRecipies = collect($responseRecipies->collect()['results']);
 
-
-            $recipies = array_map(function ($recipe) {
-
+            $recipies = $responseRecipies->map(function ($recipie) use ($params) {
                 $res = $this->giphyApi->getGifs([
-                    'q'=> $recipe['title'],
-                    'limit'=> 1,
-                    'rating'=> 'g',
+                    'q' => $recipie['title'],
+                    'limit' => 1,
+                    'rating' => 'g',
                 ]);
 
-                if ($res->failed()) {
-                    serverError("Falha ao buscar buscar receiras");
+                $data = $res->collect()['data'];
+                $gif = '#';
+                if (count($data)) {
+                    $gif = $data[0]['images']['fixed_height_downsampled']['url'] ?? $gif;
                 }
 
                 return [
-                    'title' => $recipe['title'],
-                    'ingredients' =>  explode(",", $recipe['ingredients']) ,
-                    'link' => $recipe['href'],
-                    'gif' => $recipe['thumbnail'],
+                    'title' => $recipie['title'],
+                    'ingredients' => explode(",", $recipie['ingredients']),
+                    'link' => $recipie['href'],
+                    'gif' => $gif,
                 ];
-            }, $responseRecipies->collect()['results'] ?? []);
-
+            });
 
             $data = [
                 'keywords' => $ingredients,
@@ -77,10 +78,10 @@ class RecipiesService
             ];
 
             return ok($data);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
-            return serverError("Falha ao buscar buscar receiras");
+            return serverError();
         }
     }
 }

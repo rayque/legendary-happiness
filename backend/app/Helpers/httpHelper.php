@@ -16,11 +16,11 @@ function badRequest($data)
     ];
 }
 
-function serverError($message)
+function serverError()
 {
     return [
         'data' => [
-            'message' => $message." Recomendamos que tente novamente ou entre em contato com o nosso suporte. xx xxxx-xxxx",
+            'message' => "Sorry, something goes wrong. We recommend trying again or contact us on xx xxxx-xxxx.",
         ],
         'status' => 500
     ];

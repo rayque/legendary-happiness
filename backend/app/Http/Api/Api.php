@@ -10,13 +10,10 @@ class Api
     protected $url;
 
     public function __construct($url)
-      {
-          $this->url = $url;
-      }
+    {
+        $this->url = $url;
+    }
 
-    /**
-     * @return mixed
-     */
     protected function get($params)
     {
         return Http::get($this->url, $params);

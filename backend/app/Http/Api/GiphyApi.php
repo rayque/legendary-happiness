@@ -6,16 +6,14 @@ namespace App\Http\Api;
 
 class GiphyApi extends Api
 {
-    protected $url = 'https://api.giphy.com/v1/gifs/search';
-
     public function __construct()
     {
-        parent::__construct($this->url);
+        parent::__construct(env('GIPHY_URL', ''));
     }
 
     public function getGifs($params = '')
     {
-        $params['api_key'] = 'E2GAhiJDQgjlwWX2vy7h72ob2WEbE2Wt';
+        $params['api_key'] = env('GIPHY_KEY', '');
         return $this->get($params);
     }
 }
