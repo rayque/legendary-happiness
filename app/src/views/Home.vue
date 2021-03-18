@@ -13,7 +13,7 @@
           <!--  -->
         </v-sheet>
       </v-col>
-      
+
       <v-col
           cols="12"
           sm="8"
@@ -78,6 +78,18 @@
             </v-col>
           </v-row>
 
+
+          <v-row>
+            <v-col
+                cols="12"
+                sm="12"
+            >
+
+              <recipies-list />
+
+            </v-col>
+          </v-row>
+
         </v-sheet>
       </v-col>
 
@@ -100,8 +112,10 @@
 
 <script>
 
+import RecipiesList from "../components/Recipies/RecipiesList";
 export default {
   name: 'Home',
+  components: {RecipiesList},
   data: () => ({
     ingredient: null,
     ingredients: [],
