@@ -6,7 +6,7 @@ namespace App\Http\Api;
 
 class GiphyApi extends Api
 {
-    protected $url = 'https://api.giphy.com/v1/gifs/search/';
+    protected $url = 'https://api.giphy.com/v1/gifs/search';
 
     public function __construct()
     {
