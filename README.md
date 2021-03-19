@@ -1,6 +1,25 @@
-# Search Recipes
+# Sistema de pesquisa de receitas
 
-Sistema de pesquisa de receitas
+## ✋🏻 Pré-requisitos
+- [docker](https://www.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+
+## Features
+Para o desenvolvimento do projeto foi utilizada a stack com as seguintes tecnologias:
+
+- **Laravel** — Laravel is a web application framework with expressive, elegant syntax.Web framework que permite utilizar javascript tanto no frontend quanto no backend;
+- **Vue Js** —Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces.;
+
+## 🚀  Tecnologias
+Backend:
+-   [Laravel 8](https://laravel.com/)
+
+Frontend:
+-   [Vuejs](https://vuejs.org/)
+-   [Axios](https://github.com/axios/axios)
+-   [Vue Router](https://router.vuejs.org/)
+-   [Vuetifyjs](https://vuetifyjs.com/en/)
 
 ## Instalação
 
