@@ -1,7 +1,16 @@
 <template>
-  <v-snackbar right top vertical v-model="ativo" :color="color" :timeout="timeout">
-    {{ mensagem }}
-    <v-btn dark :color="color" @click="disableSnackbar">Fechar</v-btn>
+  <v-snackbar v-model="active" :color="color" :timeout="timeout" right top>
+    <span color="white">{{ message }}</span>
+    <template v-slot:action="{ attrs }">
+      <v-btn
+          v-bind="attrs"
+          :color="color"
+          depressed
+          @click="disableSnackbar"
+      >
+        Close
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 
@@ -9,11 +18,11 @@
 export default {
   name: 'Snackbar',
   computed: {
-    ativo: {
-      get: function() {
-        return this.$store.state.snackBar.ativo;
+    active: {
+      get: function () {
+        return this.$store.state.snackBar.active;
       },
-      set: function() {
+      set: function () {
         this.$store.commit("setActiveSnackBar", false);
       }
     },
@@ -23,8 +32,8 @@ export default {
     timeout() {
       return this.$store.state.snackBar.timeout;
     },
-    mensagem() {
-      return this.$store.state.snackBar.mensagem;
+    message() {
+      return this.$store.state.snackBar.message;
     }
   },
   methods: {

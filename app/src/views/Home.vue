@@ -29,7 +29,7 @@
             <h3>Write from 1 to 3 ingredients</h3>
           </div>
 
-          <v-row no-gutters>
+          <v-row>
             <v-col
                 cols="12"
                 sm="8">
@@ -47,7 +47,7 @@
 
             <v-col
                 cols="12"
-                sm="4">
+                sm="2">
               <v-btn
                   :disabled="disableForm"
                   block
@@ -59,7 +59,22 @@
               >
                 Add Item
               </v-btn>
+            </v-col>
 
+            <v-col
+                cols="12"
+                sm="2">
+              <v-btn
+                  :disabled="disableSearchButton"
+                  block
+                  depressed
+                  class="ma-2"
+                  color="success"
+                  dark
+                  @click="search"
+              >
+                Search
+              </v-btn>
             </v-col>
           </v-row>
 
@@ -85,9 +100,7 @@
                 cols="12"
                 sm="12"
             >
-
               <recipies-list :recipies="recipiesList" />
-
             </v-col>
           </v-row>
 
@@ -112,9 +125,9 @@
 </template>
 
 <script>
-
 import RecipiesList from "../components/Recipies/RecipiesList";
-// import RecipiesApi from "../services/RecipiesApi";
+import RecipiesApi from "../services/RecipiesApi";
+
 export default {
   name: 'Home',
   components: {RecipiesList},
@@ -122,20 +135,18 @@ export default {
     ingredient: null,
     ingredients: [],
     disableForm: false,
+    disableSearchButton: true,
     recipiesList: [],
   }),
-  mounted() {
-    // RecipiesApi.getRecipies('onions,garlic')
-    // .then(res => {
-    //   console.log(res);
-    //   this.recipiesList = res.recipies;
-    // }).catch(e => {
-    //   console.log(e);
-    // })
-
-    this.Helper.showMessage("Respondedor cadastrado com sucesso!", 'success', 3000);
-  },
   methods: {
+    search() {
+      RecipiesApi.getRecipies(this.ingredients.toString())
+      .then(res => {
+        this.recipiesList = res.recipies;
+      }).catch(e => {
+        this.Helper.showMessage(e.message, 'error', 4000);
+      })
+    },
     addItem() {
       if (this.ingredient) {
         this.ingredients.push(this.ingredient);
@@ -150,7 +161,8 @@ export default {
   },
   watch: {
     ingredients(val) {
-        this.disableForm = val.length >= 3 ? true : false;
+        this.disableForm = val.length >= 3;
+        this.disableSearchButton = val.length < 1;
     }
   },
 }

@@ -5,8 +5,8 @@ Vue.use(Vuex);
 const getDefaultState = () => {
     return {
         snackBar: {
-            ativo: false,
-            mensagem: '',
+            active: false,
+            message: '',
             color: '',
             timeout: 0
         },
@@ -20,15 +20,15 @@ const getters = {
 const mutations = {
     enableSnackBar(state, dados) {
         console.log(dados);
-        if (dados.mensagem !== "") {
-            state.snackBar.mensagem = dados.mensagem;
+        if (dados.message !== "") {
+            state.snackBar.message = dados.message;
             state.snackBar.color = dados.color;
             state.snackBar.timeout = dados.timeout;
-            state.snackBar.ativo = dados.ativo;
+            state.snackBar.active = dados.active;
         }
     },
     setActiveSnackBar(state, status) {
-        state.snackBar.ativo = status;
+        state.snackBar.active = status;
     },
 };
 const actions = {};
