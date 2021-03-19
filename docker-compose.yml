@@ -7,8 +7,8 @@ services:
         uid: 1000
       context: ./backend/
       dockerfile: Dockerfile
-    image: travellist
-    container_name: dm-backen
+    image: dm-backend
+    container_name: dm-backend
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -18,7 +18,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: travellist-nginx
+    container_name: dm-nginx
     restart: unless-stopped
     ports:
       - 8000:80
@@ -32,7 +32,8 @@ services:
     build:
       context: ./app/
       dockerfile: Dockerfile
-    container_name: dm-frontend-app
+    image: dm-frontend
+    container_name: dm-frontend
     restart: unless-stopped
     ports:
       - 8080:80
