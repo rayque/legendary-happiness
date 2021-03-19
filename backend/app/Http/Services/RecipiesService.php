@@ -47,7 +47,7 @@ class RecipiesService
 
             $responseRecipies = $this->recipePuppyApi->getRecipes($ingredients);
             if ($responseRecipies->failed()) {
-                serverError();
+                return serverError();
             }
             $responseRecipies = collect($responseRecipies->collect()['results']);
 
@@ -58,7 +58,7 @@ class RecipiesService
                     'rating' => 'g',
                 ]);
                 if ($responseGifs->failed()) {
-                    serverError();
+                    return serverError();
                 }
                 $gifs = $responseGifs->collect()['data'] ?? [];
                 $gif = $gifs['0']['images']['fixed_height_downsampled']['url'] ?? '';

@@ -152,8 +152,9 @@ export default {
         this.recipiesList = res.recipies;
         this.loading = false;
       }).catch(e => {
+        const{message} = e.response.data;
         this.loading = false;
-        this.Helper.showMessage(e.message, 'error', 4000);
+        this.Helper.showMessage(message, 'error', 4000);
       })
     },
     addItem() {

@@ -19,7 +19,6 @@ const getters = {
 };
 const mutations = {
     enableSnackBar(state, dados) {
-        console.log(dados);
         if (dados.message !== "") {
             state.snackBar.message = dados.message;
             state.snackBar.color = dados.color;
