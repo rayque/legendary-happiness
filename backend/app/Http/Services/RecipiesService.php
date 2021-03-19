@@ -44,8 +44,7 @@ class RecipiesService
                     'message' => 'Insert a maximum of 3 ingredients.'
                 ]);
             }
-
-            $responseRecipies = $this->recipePuppyApi->getRecipes($ingredients);
+            $responseRecipies = $this->recipePuppyApi->getRecipes('i='.$params);
             if ($responseRecipies->failed()) {
                 return serverError();
             }

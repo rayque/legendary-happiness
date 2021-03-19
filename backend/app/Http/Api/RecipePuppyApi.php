@@ -14,7 +14,6 @@ class RecipePuppyApi extends Api
 
     public function getRecipes($params = ''): Response
     {
-        $params['i'] = $params[0];
         return $this->get($params);
     }
 }
