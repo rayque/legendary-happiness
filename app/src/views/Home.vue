@@ -10,7 +10,9 @@
             min-height="268"
             rounded="lg"
         >
-          <!--  -->
+          <div class="headline pa-5 red--text">
+            The best ingredients
+          </div>
         </v-sheet>
       </v-col>
 
@@ -71,6 +73,7 @@
                   class="ma-2"
                   color="success"
                   dark
+                  :loading="loading"
                   @click="search"
               >
                 Search
@@ -115,7 +118,9 @@
             min-height="268"
             rounded="lg"
         >
-          <!--  -->
+          <div class="headline align-center center pa-5 red--text">
+            The best recipes
+          </div>
         </v-sheet>
       </v-col>
     </v-row>
@@ -132,6 +137,7 @@ export default {
   name: 'Home',
   components: {RecipiesList},
   data: () => ({
+    loading: false,
     ingredient: null,
     ingredients: [],
     disableForm: false,
@@ -140,10 +146,13 @@ export default {
   }),
   methods: {
     search() {
+      this.loading = true;
       RecipiesApi.getRecipies(this.ingredients.toString())
       .then(res => {
         this.recipiesList = res.recipies;
+        this.loading = false;
       }).catch(e => {
+        this.loading = false;
         this.Helper.showMessage(e.message, 'error', 4000);
       })
     },
