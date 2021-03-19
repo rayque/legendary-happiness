@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  dm-backend:
+    build:
+      args:
+        user: user
+        uid: 1000
+      context: ./backend/
+      dockerfile: Dockerfile
+    image: travellist
+    container_name: dm-backen
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - dm-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: travellist-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./backend/:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - dm-network
+      
+  frontend:
+    build:
+      context: ./app/
+      dockerfile: Dockerfile
+    container_name: dm-frontend-app
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    networks:
+      - dm-network
+
+networks:
+  dm-network:
+    driver: bridge
